@@ -1,6 +1,7 @@
 // import express
 const express = require("express")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
 
 // instantiate an instance of express
 const app = express()
@@ -11,8 +12,19 @@ const PORT = 8080
 // body parser middlware
 app.use(bodyParser.json())
 
+// cookie parser middlware
+app.use(cookieParser())
+
+// using cookie parser middleware endpoint
+app.get("/cookies", (req, res) => {
+    console.log("Cookies: ", req.cookies)
+    res.cookie("cart", ["milk", "carrots", "pet food"])
+    res.cookie("darkMode", true)
+    res.send("cart cookie set")
+})
+
 // health endpoint
-app.get("/", (req, res) => {
+app.get("/health", (req, res) => {
     console.log("thanks for checking")
     res.send("healthy! thanks for checking")
 })
